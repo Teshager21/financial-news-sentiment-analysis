@@ -1,5 +1,6 @@
-import pytest
 import pandas as pd
+import pytest
+
 from eda.topic_modeler import TextCleaner, TopicModeler  # adjust import as needed
 
 
