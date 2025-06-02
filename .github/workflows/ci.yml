@@ -2,9 +2,11 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'   # Match all branches
   pull_request:
-    branches: [main]
+    branches:
+      - '**'   # Also match PRs from any branch
 
 jobs:
   test:
