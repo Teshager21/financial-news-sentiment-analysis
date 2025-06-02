@@ -1,4 +1,5 @@
 import pandas as pd
+from typing import Optional
 
 
 class DataQualityUtils:
@@ -91,7 +92,7 @@ class DataQualityUtils:
         return self.df.duplicated().sum()
 
     def convert_columns_to_datetime(
-        self, columns: list[str] | None = None, errors: str = "coerce"
+        self, columns: Optional[list[str]] = None, errors: str = "coerce"
     ) -> pd.DataFrame:
         if columns is None:
             columns = [
@@ -99,9 +100,27 @@ class DataQualityUtils:
                 for col in self.df.columns
                 if "date" in col.lower() or "time" in col.lower()
             ]
+
         for col in columns:
             if col in self.df.columns:
-                self.df[col] = pd.to_datetime(self.df[col], errors=errors)
+                original_non_null = self.df[col].notna().sum()
+
+                # Ensure strings and strip whitespaces
+                self.df[col] = self.df[col].astype(str).str.strip()
+
+                # Replace known bad values
+                self.df[col] = self.df[col].replace(
+                    ["", "nan", "null", "None", "NaT", "N/A"], pd.NA
+                )
+
+                # Convert datetime (handles timezone-aware strings too)
+                self.df[col] = pd.to_datetime(self.df[col], errors=errors, utc=True)
+
+                converted = self.df[col].notna().sum()
+                print(
+                    f"[{col}] Converted: {converted}/{original_non_null} "
+                    f"({original_non_null - converted} became NaT)"
+                )
             else:
                 print(f"Warning: Column '{col}' not found.")
         return self.df
