@@ -1,0 +1,130 @@
+
+# Docker
+*.pid
+*.pid.lock
+docker-compose.override.yml
+docker-compose.yml
+.dockerignore
+
+
+
+
+
+
+
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+*.envrc
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+.history/
+
+# PyCharm
+.idea/
+
+# Testing
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+nosetests.xml
+test-results/
+
+# Logs
+*.log
+*.out
+*.err
+
+# Data files
+data/
+*.csv
+*.tsv
+*.parquet
+*.xls
+*.xlsx
+*.h5
+*.hdf5
+*.db
+*.sqlite3
+*.json
+*.yaml
+*.yml
+
+# Secrets & credentials
+*.env
+.env.*
+secrets.yaml
+credentials.json
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Packaging
+pip-wheel-metadata/
+*.egg
+MANIFEST
+
+# Lint & formatting
+.mypy_cache/
+.pytype/
+.pyre/
+.pyright/
+.dmypy.json
+
+# IDEs and Tools
+*.swp
+*.swo
+*.bak
+*.tmp
+*~
+
+# Pre-commit
+!.pre-commit-config.yaml
+.pre-commit-hooks.yaml
+.pre-commit-venv/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Cloud
+.aws/
+.gcloud/
+azure/
+terraform.tfstate
+terraform.tfstate.*
+.terraform/
+
+# Allow GitHub Actions workflow files
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
