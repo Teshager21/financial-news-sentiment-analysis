@@ -29,6 +29,8 @@ class TextCleaner(BaseEstimator, TransformerMixin):
 
 class TopicModeler:
     def __init__(self, df: pd.DataFrame, text_col: str = "headline", n_topics: int = 5):
+        if text_col not in df.columns:
+            raise KeyError(f"Column '{text_col}' not found in DataFrame.")
         self.df = df.copy()
         self.text_col = text_col
         self.n_topics = n_topics
