@@ -56,6 +56,7 @@ test-results/
 
 # Data files
 data/
+!tests/data/
 *.csv
 *.tsv
 *.parquet
