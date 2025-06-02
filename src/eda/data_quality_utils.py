@@ -23,7 +23,6 @@ class DataQualityUtils:
         """
         if "unnamed:_0" in self.df.columns:
             self.df = self.df.drop(columns=["unnamed:_0"])
-
         self.df = self.df.loc[:, ~self.df.columns.duplicated()]
         return self.df
 
@@ -75,23 +74,34 @@ class DataQualityUtils:
     def summary(self) -> pd.DataFrame:
         """
         Provide a concise summary of missing data in the entire DataFrame.
-
-        Returns:
-            pd.DataFrame: All columns with #missing_values
-            and %missing (non-thresholded).
         """
         missing_counts = self.df.isna().sum()
         missing_percent = (missing_counts / len(self.df)) * 100
-        summary_df = pd.DataFrame(
+        return pd.DataFrame(
             {
                 "#missing_values": missing_counts,
                 "percentage": missing_percent.map(lambda x: f"{x:.2f}%"),
             }
         ).sort_values(by="#missing_values", ascending=False)
-        return summary_df
 
     def count_duplicates(self) -> int:
         """
         Returns the number of duplicate rows in the DataFrame.
         """
         return self.df.duplicated().sum()
+
+    def convert_columns_to_datetime(
+        self, columns: list[str] | None = None, errors: str = "coerce"
+    ) -> pd.DataFrame:
+        if columns is None:
+            columns = [
+                col
+                for col in self.df.columns
+                if "date" in col.lower() or "time" in col.lower()
+            ]
+        for col in columns:
+            if col in self.df.columns:
+                self.df[col] = pd.to_datetime(self.df[col], errors=errors)
+            else:
+                print(f"Warning: Column '{col}' not found.")
+        return self.df
