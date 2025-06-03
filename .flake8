@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203, W503, E501
+# W503 is ignored because it conflicts with PEP 8's recommendation
+# E203 is ignored because it conflicts with Black   formatter
+# E501 is ignored because it conflicts with Black formatter
